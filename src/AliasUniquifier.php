@@ -82,12 +82,17 @@ class AliasUniquifier implements AliasUniquifierInterface {
     $original_alias = $alias;
 
     $i = 0;
-    do {
+    while ($this->isReserved($alias, $source, $langcode)) {
       // Append an incrementing numeric suffix until we find a unique alias.
       $unique_suffix = $separator . $i;
       $alias = Unicode::truncate($original_alias, $maxlength - Unicode::strlen($unique_suffix, TRUE)) . $unique_suffix;
       $i++;
-    } while ($this->isReserved($alias, $source, $langcode));
+
+      if ($i > 50) {
+        $alias = $original_alias;
+        break;
+      }
+    }
   }
 
   /**
