@@ -88,7 +88,7 @@ class AliasUniquifier implements AliasUniquifierInterface {
       $alias = Unicode::truncate($original_alias, $maxlength - Unicode::strlen($unique_suffix, TRUE)) . $unique_suffix;
       $i++;
 
-      if ($i > 50) {
+      if ($i > 200) {
         $alias = $original_alias;
         break;
       }
